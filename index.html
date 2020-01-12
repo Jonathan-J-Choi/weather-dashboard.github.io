@@ -1,93 +1,109 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
-    <!-- Font Awesome -->
-    <link
-      rel="stylesheet"
-      href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css"
-    />
-    <!-- Bootstrap -->
-    <link
-      rel="stylesheet"
-      href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css"
-      integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh"
-      crossorigin="anonymous"
-    />
-    <!-- Style Sheet -->
-    <link rel="stylesheet" href="style.css" />
-    <title>Weather Dashboard</title>
-  </head>
 
-  <body>
-    <!-- Search bar -->
-    <div class="container" id="dash">
-      <h1>What's The Weather Like Today?</h1>
-      <br>
-      <div class="row">
-        <div class="col-4">
-          <div class="input-group mb-3">
-            <!-- Text input -->
-            <input type="text" class="form-control" id="srch" placeholder="Location">
-            <div class="input-group-append">
-              <!-- Search Button -->
-              <button class="btn btn-outline-secondary" id="srchBtn" type="button">Search</button>
-            </div>
-          </div>
-            <!-- Past Searches -->
-            <div id="pstSrch">
-            <input type="text" class="form-control" readonly>
-            <input type="text" class="form-control" readonly>
-            <input type="text" class="form-control" readonly>
-            <input type="text" class="form-control" readonly>
-            <input type="text" class="form-control" readonly>
-            </div>
-        </div>
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+  <!-- Font Awesome -->
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" />
+  <!-- Bootstrap -->
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css"
+    integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous" />
+  <!-- Style Sheet -->
+  <link rel="stylesheet" href="style.css" />
+  <title>Weather Dashboard</title>
+</head>
 
-        <!-- Main window -->
-        <div class ="col-8">
-          <div class="jumbotron">
-            <h1 class="display-4">Weather</h1>
-            <hr class="my-4">
-            <p class="lead" id="mainDisp"></p>
+<body>
+  <!-- Search bar -->
+  <div class="container" id="dash">
+    <h1>What's The Weather Like Today?</h1>
+    <br>
+    <div class="row">
+      <div class="col-4">
+        <div class="input-group mb-3">
+          <!-- Text input -->
+          <input type="text" class="form-control" id="srch" placeholder="Location">
+          <div class="input-group-append">
+            <!-- Search Button -->
+            <button class="btn btn-outline-secondary" id="srchBtn" type="button">Search</button>
           </div>
         </div>
+        <!-- Past Searches -->
+        <div id="pstSrch">
+          <input type="text" class="form-control" readonly>
+          <input type="text" class="form-control" readonly>
+          <input type="text" class="form-control" readonly>
+          <input type="text" class="form-control" readonly>
+          <input type="text" class="form-control" readonly>
+        </div>
+      </div>
+
+      <!-- Main window -->
+      <div class="col-8">
+        <div class="jumbotron">
+          <h1 class="display-4" id="city">Weather</h1>
+          <hr class="my-4">
+          <p class="lead" id="mainDisp"></p>
+        </div>
+      </div>
 
 
-        <!-- Daily Weather Cards -->
+      <!-- Daily Weather Cards -->
+
+      <div class="container">
+        <div class="row text-center">
 
           <!-- Today -->
-          <div class="col-sm-4">
-            <div class="card" style="width: 18rem;">
+          <div class="col-sm-2.4 hide" id="today">
+            <div class="card" style="width: 14rem;">
               <div class="card-body">
-                <h5 class="card-title">Today</h5>
-                <p class="card-text" id="tod">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
+                <h5 class="card-title" id="todDate"></h5>
+                <p class="card-text" id="tod"></p>
               </div>
             </div>
           </div>
 
           <!-- Tomorrow -->
-          <div class="col-sm-4 hide" id="tomorrow">
-            <div class="card" style="width: 18rem;">
+          <div class="col-sm-2.4 hide" id="tomorrow">
+            <div class="card" style="width: 14rem;">
               <div class="card-body">
-                <h5 class="card-title">Tomorrow</h5>
-                <p class="card-text" id="tom">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
+                <h5 class="card-title" id="tomDate"></h5>
+                <p class="card-text" id="tom"></p>
               </div>
             </div>
           </div>
 
-          <div class ="container">
-            <div class="row text-center">
-              <div class="col-sm-4">
-                <div class="card" style="width: 18rem;">
-                  <div class="card-body">
-                    <h5 class="card-title">The Day After</h5>
-                    <p class="card-text" id="dayAfter">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
-                  </div>
-                </div>
+          <!-- Day after -->
+          <div class="col-sm-2.4 hide" id="theDayAfter">
+            <div class="card" style="width: 14rem;">
+              <div class="card-body">
+                <h5 class="card-title" id="dayA">The Day After</h5>
+                <p class="card-text" id="dayAfter"></p>
               </div>
+            </div>
+          </div>
+
+          <!-- Day after after -->
+          <div class="col-sm-2.4 hide" id="theDayAfterA">
+            <div class="card" style="width: 14rem;">
+              <div class="card-body">
+                <h5 class="card-title" id="dayAA">The Day After</h5>
+                <p class="card-text" id="dayAfterA"></p>
+              </div>
+            </div>
+          </div>
+
+          <!-- Day after after after -->
+          <div class="col-sm-2.4 hide" id="theDayAfterAA">
+            <div class="card" style="width: 14rem;">
+              <div class="card-body">
+                <h5 class="card-title" id="dayAAA">The Day After</h5>
+                <p class="card-text" id="dayAfterAA"></p>
+              </div>
+            </div>
+          </div>
         </div>
       </div>
     </div>
@@ -96,5 +112,6 @@
     <!-- Scripts -->
     <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
     <script src="script.js"></script>
-  </body>
+</body>
+
 </html>
