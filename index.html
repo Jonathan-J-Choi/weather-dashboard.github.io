@@ -51,23 +51,12 @@
           <div class="jumbotron">
             <h1 class="display-4">Weather</h1>
             <hr class="my-4">
-            <p class="lead" id="mainDisp">This is a simple hero unit, a simple jumbotron-style component for calling extra attention to featured content or information.</p>
+            <p class="lead" id="mainDisp"></p>
           </div>
         </div>
 
 
         <!-- Daily Weather Cards -->
-        <!-- Yesterday -->
-      <div class ="container">
-        <div class="row text-center">
-          <div class="col-sm-4">
-            <div class="card" style="width: 18rem;">
-              <div class="card-body">
-                <h5 class="card-title">Yesterday</h5>
-                <p class="card-text" id="yest">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
-              </div>
-            </div>
-          </div>
 
           <!-- Today -->
           <div class="col-sm-4">
@@ -80,7 +69,7 @@
           </div>
 
           <!-- Tomorrow -->
-          <div class="col-sm-4">
+          <div class="col-sm-4 hide" id="tomorrow">
             <div class="card" style="width: 18rem;">
               <div class="card-body">
                 <h5 class="card-title">Tomorrow</h5>
@@ -88,6 +77,17 @@
               </div>
             </div>
           </div>
+
+          <div class ="container">
+            <div class="row text-center">
+              <div class="col-sm-4">
+                <div class="card" style="width: 18rem;">
+                  <div class="card-body">
+                    <h5 class="card-title">The Day After</h5>
+                    <p class="card-text" id="dayAfter">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
+                  </div>
+                </div>
+              </div>
         </div>
       </div>
     </div>
