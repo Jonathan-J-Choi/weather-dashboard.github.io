@@ -24,6 +24,7 @@ $(srchBtn).on("click", function(){
     $("#mainDisp").append(lowP);
     $("#mainDisp").append(humTod);
     $("#mainDisp").append(wind);
+    
     forecast();
   })
 })
@@ -33,6 +34,7 @@ function forecast(){
     url:"http://api.openweathermap.org/data/2.5/forecast?q="+srch.value+"&appid=7ba67ac190f85fdba2e2dc6b9d32e93c&units=imperial"
   }).then(function(data){
     console.log (data.list)
+    // day 1 card
     $("#today").removeClass("hide");
     var todDat = data.list[0].dt_txt;
     var todWea = data.list[0].weather[0].description;
@@ -45,17 +47,57 @@ function forecast(){
     $("#tod").append(lowTod);
     $("#tod").append(humTod);
 
+    // day 2 card
     $("#tomorrow").removeClass("hide");
-    var tomDat = data.list[1].dt_txt;
-    var tomWea = data.list[1].weather[0].description;
-    var tomText = $("<p>").text("High: "+ data.list[1].main.temp_max + "°F");
-    var lowTom = $("<p>").text("Low: "+ data.list[1].main.temp_min + "°F");
-    var humTom = $("<p>").text("Humidity: "+ data.list[1].main.humidity + "%");
+    var tomDat = data.list[8].dt_txt;
+    var tomWea = data.list[8].weather[0].description;
+    var tomText = $("<p>").text("High: "+ data.list[8].main.temp_max + "°F");
+    var lowTom = $("<p>").text("Low: "+ data.list[8].main.temp_min + "°F");
+    var humTom = $("<p>").text("Humidity: "+ data.list[8].main.humidity + "%");
     $("#tomDate").text(tomDat);
     $("#tom").text(tomWea);
     $("#tom").append(tomText);
     $("#tom").append(lowTom);
     $("#tom").append(humTom);
+
+    // day 3 card
+    $("#theDayAfter").removeClass("hide");
+    var dat = data.list[16].dt_txt;
+    var wea = data.list[16].weather[0].description;
+    var high = $("<p>").text("High: "+ data.list[16].main.temp_max + "°F");
+    var low = $("<p>").text("Low: "+ data.list[16].main.temp_min + "°F");
+    var hum = $("<p>").text("Humidity: "+ data.list[16].main.humidity + "%");
+    $("#dayA").text(dat);
+    $("#dayAfter").text(wea);
+    $("#dayAfter").append(high);
+    $("#dayAfter").append(low);
+    $("#dayAfter").append(hum);
+
+    // day 4 card
+    $("#theDayAfterA").removeClass("hide");
+    var dat = data.list[24].dt_txt;
+    var wea = data.list[24].weather[0].description;
+    var high = $("<p>").text("High: "+ data.list[24].main.temp_max + "°F");
+    var low = $("<p>").text("Low: "+ data.list[24].main.temp_min + "°F");
+    var hum = $("<p>").text("Humidity: "+ data.list[24].main.humidity + "%");
+    $("#dayAA").text(dat);
+    $("#dayAfterA").text(wea);
+    $("#dayAfterA").append(high);
+    $("#dayAfterA").append(low);
+    $("#dayAfterA").append(hum);
+
+    // day 5 card
+    $("#theDayAfterAA").removeClass("hide");
+    var dat = data.list[32].dt_txt;
+    var wea = data.list[32].weather[0].description;
+    var high = $("<p>").text("High: "+ data.list[32].main.temp_max + "°F");
+    var low = $("<p>").text("Low: "+ data.list[32].main.temp_min + "°F");
+    var hum = $("<p>").text("Humidity: "+ data.list[32].main.humidity + "%");
+    $("#dayAAA").text(dat);
+    $("#dayAfterAA").text(wea);
+    $("#dayAfterAA").append(high);
+    $("#dayAfterAA").append(low);
+    $("#dayAfterAA").append(hum);
   })
 }
 
