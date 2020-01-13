@@ -1,6 +1,7 @@
 // Search Button and Main Area
 $(srchBtn).on("click", function() {
   saveSearch();
+
   // empty old info
   $("#city, #mainDisp, #tod, #todDate, #tom, #tomDate, #dayAfter, #dayA, #dayAfterA, #dayAA, #dayAfterAA, #dayAAA").empty();
   $.ajax({
@@ -9,6 +10,7 @@ $(srchBtn).on("click", function() {
       srch.value +
       "&appid=7ba67ac190f85fdba2e2dc6b9d32e93c&units=imperial"
   }).then(function(data) {
+
     // main area
     var city = data.name;
     var img = $("<img>").attr(
@@ -20,6 +22,8 @@ $(srchBtn).on("click", function() {
     var lowP = $("<p>").text("Today's Low is: " + data.main.temp_min + "°F");
     var humTod = $("<p>").text("Humidity: " + data.main.humidity + "%");
     var wind = $("<p>").text("Wind Speed: " + data.wind.speed + " MPH");
+    var lon = data.coord.lon;
+    var lat = data.coord.lat;
     $("#city").text(city);
     $("#mainDisp").text(mainTxt);
     $("#city").append(img);
@@ -29,6 +33,17 @@ $(srchBtn).on("click", function() {
     $("#mainDisp").append(wind);
     // populate 5 day forecast cards
     forecast();
+    ultraViolent();
+    
+    // UV Index
+    function ultraViolent() {
+    $.ajax({
+      url:"http://api.openweathermap.org/data/2.5/uvi?lat="+ lat +"&lon="+ lon +"&appid=7ba67ac190f85fdba2e2dc6b9d32e93c&units=imperial",
+    }).then(function(data) {
+      var uv = $("<p>").text("UV Index: " + data.value);
+      $("#mainDisp").append(uv);
+    });
+}
   });
 });
 
@@ -132,7 +147,6 @@ function forecast() {
     $("#dayAfterAA").append(hum);
   });
 }
-
 // Saving searches to local storage
 function saveSearch() {
   var pastSearches = JSON.parse(localStorage.getItem("srchArray"));
@@ -143,9 +157,8 @@ function saveSearch() {
     var srchStringArray = JSON.stringify(comboArray);
     localStorage.setItem("srchArray", srchStringArray);
   } else {
-    // console.log("woops");
-    // var srchArray = [srch.value];
-    // var srchStringArray = JSON.stringify(srchArray);
-    // localStorage.setItem("srchArray", srchStringArray);
+    var srchArray = [srch.value];
+    var srchStringArray = JSON.stringify(srchArray);
+    localStorage.setItem("srchArray", srchStringArray);
   }
 }
