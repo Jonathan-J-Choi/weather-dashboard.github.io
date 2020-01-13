@@ -169,8 +169,64 @@ function saveSearch() {
 
     for(var i = 0; i < srchArray.length; i++) {
       var srchBtn = $("<button>");
-      $( "<button>" ).addClass( "saved" );
+      $(srchBtn).addClass( "saved" );
       srchBtn.text(srchArray[i]);
       srchBtn.appendTo("#pstSrch");
     }
   }
+
+
+  $(".saved").on("click", function() {
+    // empty old info
+    $(
+      "#city, #mainDisp, #tod, #todDate, #tom, #tomDate, #dayAfter, #dayA, #dayAfterA, #dayAA, #dayAfterAA, #dayAAA"
+    ).empty();
+    $.ajax({
+      url:
+        "http://api.openweathermap.org/data/2.5/weather?q=" +
+        ".saved".value +
+        "&appid=7ba67ac190f85fdba2e2dc6b9d32e93c&units=imperial"
+    }).then(function(data) {
+      // Populating the main area
+      var city = data.name;
+      var img = $("<img>").attr(
+        "src",
+        "http://openweathermap.org/img/w/" + data.weather[0].icon + ".png"
+      );
+      var mainTxt = "Current Temp is: " + data.main.temp + "°F";
+      var highP = $("<p>").text("Today's High is: " + data.main.temp_max + "°F");
+      var lowP = $("<p>").text("Today's Low is: " + data.main.temp_min + "°F");
+      var humTod = $("<p>").text("Humidity: " + data.main.humidity + "%");
+      var wind = $("<p>").text("Wind Speed: " + data.wind.speed + " MPH");
+      var lon = data.coord.lon;
+      var lat = data.coord.lat;
+      $("#city").text(city);
+      $("#mainDisp").text(mainTxt);
+      $("#city").append(img);
+      $("#mainDisp").append(highP);
+      $("#mainDisp").append(lowP);
+      $("#mainDisp").append(humTod);
+      $("#mainDisp").append(wind);
+  
+      // populate 5 day forecast cards
+      forecast();
+  
+      // Add UV index to mainDisplay
+      ultraViolent();
+  
+      // UV Index
+      function ultraViolent() {
+        $.ajax({
+          url:
+            "http://api.openweathermap.org/data/2.5/uvi?lat=" +
+            lat +
+            "&lon=" +
+            lon +
+            "&appid=7ba67ac190f85fdba2e2dc6b9d32e93c&units=imperial"
+        }).then(function(data) {
+          var uv = $("<p>").text("UV Index: " + data.value);
+          $("#mainDisp").append(uv);
+        });
+      }
+    });
+  });
