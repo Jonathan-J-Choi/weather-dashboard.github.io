@@ -185,7 +185,7 @@ function saveSearch() {
     $.ajax({
       url:
         "http://api.openweathermap.org/data/2.5/weather?q=" +
-        ".saved".value +
+        $('.saved').text() +
         "&appid=7ba67ac190f85fdba2e2dc6b9d32e93c&units=imperial"
     }).then(function(data) {
       // Populating the main area
