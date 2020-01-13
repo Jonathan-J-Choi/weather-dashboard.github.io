@@ -1,11 +1,4 @@
-// var srch = document.getElementById("srch");
-// var srchBtn = document.getElementById("srchBtn");
-// var pstSrch = document.getElementById("pstSrch");
-// var mainDisp = document.getElementById("mainDisp");
-// var yest = document.getElementById("yest");
-// var tod = document.getElementById("tod");
-// var tom = document.getElementById("tom");
-
+// Search Button and Main Area
 $(srchBtn).on("click", function(){
   saveSearch();
   $.ajax({
@@ -29,6 +22,7 @@ $(srchBtn).on("click", function(){
   })
 })
 
+// Forecast cards
 function forecast(){
   $.ajax({
     url:"http://api.openweathermap.org/data/2.5/forecast?q="+srch.value+"&appid=7ba67ac190f85fdba2e2dc6b9d32e93c&units=imperial"
@@ -89,7 +83,7 @@ function forecast(){
     // day 5 card
     $("#theDayAfterAA").removeClass("hide");
     var dat = data.list[32].dt_txt;
-    var wea = data.list[32].weather[0].description;
+    var wea ="http://openweathermap.org/img/wn/10d@2x.png" + data.list[32].weather[0].description;
     var high = $("<p>").text("High: "+ data.list[32].main.temp_max + "°F");
     var low = $("<p>").text("Low: "+ data.list[32].main.temp_min + "°F");
     var hum = $("<p>").text("Humidity: "+ data.list[32].main.humidity + "%");
@@ -101,6 +95,7 @@ function forecast(){
   })
 }
 
+// Saving searches to local storage
 function saveSearch(){
   var pastSearches = JSON.parse(localStorage.getItem("srchArray"));
   if(Array.isArray(pastSearches) ===true) {
