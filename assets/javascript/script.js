@@ -3,15 +3,16 @@ $(srchBtn).on("click", function() {
   saveSearch();
 
   // empty old info
-  $("#city, #mainDisp, #tod, #todDate, #tom, #tomDate, #dayAfter, #dayA, #dayAfterA, #dayAA, #dayAfterAA, #dayAAA").empty();
+  $(
+    "#city, #mainDisp, #tod, #todDate, #tom, #tomDate, #dayAfter, #dayA, #dayAfterA, #dayAA, #dayAfterAA, #dayAAA"
+  ).empty();
   $.ajax({
     url:
       "http://api.openweathermap.org/data/2.5/weather?q=" +
       srch.value +
       "&appid=7ba67ac190f85fdba2e2dc6b9d32e93c&units=imperial"
   }).then(function(data) {
-
-    // main area
+    // Populating the main area
     var city = data.name;
     var img = $("<img>").attr(
       "src",
@@ -31,19 +32,27 @@ $(srchBtn).on("click", function() {
     $("#mainDisp").append(lowP);
     $("#mainDisp").append(humTod);
     $("#mainDisp").append(wind);
+
     // populate 5 day forecast cards
     forecast();
+
+    // Add UV index to mainDisplay
     ultraViolent();
-    
+
     // UV Index
     function ultraViolent() {
-    $.ajax({
-      url:"http://api.openweathermap.org/data/2.5/uvi?lat="+ lat +"&lon="+ lon +"&appid=7ba67ac190f85fdba2e2dc6b9d32e93c&units=imperial",
-    }).then(function(data) {
-      var uv = $("<p>").text("UV Index: " + data.value);
-      $("#mainDisp").append(uv);
-    });
-}
+      $.ajax({
+        url:
+          "http://api.openweathermap.org/data/2.5/uvi?lat=" +
+          lat +
+          "&lon=" +
+          lon +
+          "&appid=7ba67ac190f85fdba2e2dc6b9d32e93c&units=imperial"
+      }).then(function(data) {
+        var uv = $("<p>").text("UV Index: " + data.value);
+        $("#mainDisp").append(uv);
+      });
+    }
   });
 });
 
@@ -72,7 +81,6 @@ function forecast() {
     $("#tod").append(lowTod);
     $("#tod").append(humTod);
 
-
     // day 2 card
     $("#tomorrow").removeClass("hide");
     var tomDat = data.list[8].dt_txt;
@@ -89,7 +97,6 @@ function forecast() {
     $("#tom").append(lowTom);
     $("#tom").append(humTom);
 
-    
     // day 3 card
     $("#theDayAfter").removeClass("hide");
     var dat = data.list[16].dt_txt;
@@ -107,7 +114,6 @@ function forecast() {
     $("#dayAfter").append(high);
     $("#dayAfter").append(low);
     $("#dayAfter").append(hum);
-
 
     // day 4 card
     $("#theDayAfterA").removeClass("hide");
@@ -127,7 +133,6 @@ function forecast() {
     $("#dayAfterA").append(low);
     $("#dayAfterA").append(hum);
 
-    
     // day 5 card
     $("#theDayAfterAA").removeClass("hide");
     var dat = data.list[32].dt_txt;
@@ -161,4 +166,10 @@ function saveSearch() {
     var srchStringArray = JSON.stringify(srchArray);
     localStorage.setItem("srchArray", srchStringArray);
   }
-}
+
+    for(var i = 0; i < srchArray.length; i++) {
+      var srchBtn = $("<button>");
+      srchBtn.text(srchArray[i]);
+      srchBtn.appendTo("#pstSrch");
+    }
+  }
