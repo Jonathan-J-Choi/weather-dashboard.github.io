@@ -169,6 +169,7 @@ function saveSearch() {
 
     for(var i = 0; i < srchArray.length; i++) {
       var srchBtn = $("<button>");
+      $( "<button>" ).addClass( "saved" );
       srchBtn.text(srchArray[i]);
       srchBtn.appendTo("#pstSrch");
     }
