@@ -176,8 +176,9 @@ function saveSearch() {
   }
 
 
-  $(".saved").on("click", function() {
+  $("#pstSrch").on("click", ".saved", function() {
     // empty old info
+    console.log("hello")
     $(
       "#city, #mainDisp, #tod, #todDate, #tom, #tomDate, #dayAfter, #dayA, #dayAfterA, #dayAA, #dayAfterAA, #dayAAA"
     ).empty();
