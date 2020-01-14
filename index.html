@@ -29,12 +29,18 @@
           </div>
         </div>
         <!-- Past Searches -->
-        <div id="pstSrch">
-          <input type="text" class="form-control s1" readonly>
-          <input type="text" class="form-control s2" readonly>
-          <input type="text" class="form-control s3" readonly>
-          <input type="text" class="form-control s4" readonly>
-          <input type="text" class="form-control s5" readonly>
+        <div class="card text-center" style="width: 22rem;">
+          <div>
+            <!-- Div that holds buttons -->
+            <ul>
+              <br>
+              <div id="pstSrch">
+              </div>
+              <br>
+              <button class="btn btn-primary" id="clear">Clear All</button>
+              <br>
+            </ul>
+          </div>
         </div>
       </div>
 
@@ -50,55 +56,63 @@
 
       <!-- Daily Weather Cards -->
 
-      <div class="container">
-        <div class="row text-center">
+      <div class="container foreCast">
+        <div class="hide text-center" id="headingFore">
+          <div class="jumbotron-fluid jumboFore bg-light">
+            <br>
+            <h1>Five Day Weather Forecast</h1>
+            <hr class="my-4">
+            <br>
+            <div class="row text-center">
 
-          <!-- Today -->
-          <div class="col-sm-2.4 hide" id="today">
-            <div class="card" style="width: 14rem;">
-              <div class="card-body">
-                <h5 class="card-title" id="todDate"></h5>
-                <p class="card-text" id="tod"></p>
+              <!-- Today -->
+              <div class="col-sm-2.4 hide" id="today">
+                <div class="card" style="width: 14rem;">
+                  <div class="card-body">
+                    <h5 class="card-title" id="todDate"></h5>
+                    <p class="card-text" id="tod"></p>
+                  </div>
+                </div>
               </div>
-            </div>
-          </div>
-
-          <!-- Tomorrow -->
-          <div class="col-sm-2.4 hide" id="tomorrow">
-            <div class="card" style="width: 14rem;">
-              <div class="card-body">
-                <h5 class="card-title" id="tomDate"></h5>
-                <p class="card-text" id="tom"></p>
+    
+              <!-- Tomorrow -->
+              <div class="col-sm-2.4 hide" id="tomorrow">
+                <div class="card" style="width: 14rem;">
+                  <div class="card-body">
+                    <h5 class="card-title" id="tomDate"></h5>
+                    <p class="card-text" id="tom"></p>
+                  </div>
+                </div>
               </div>
-            </div>
-          </div>
-
-          <!-- Day after -->
-          <div class="col-sm-2.4 hide" id="theDayAfter">
-            <div class="card" style="width: 14rem;">
-              <div class="card-body">
-                <h5 class="card-title" id="dayA">The Day After</h5>
-                <p class="card-text" id="dayAfter"></p>
+    
+              <!-- Day after -->
+              <div class="col-sm-2.4 hide" id="theDayAfter">
+                <div class="card" style="width: 14rem;">
+                  <div class="card-body">
+                    <h5 class="card-title" id="dayA">The Day After</h5>
+                    <p class="card-text" id="dayAfter"></p>
+                  </div>
+                </div>
               </div>
-            </div>
-          </div>
-
-          <!-- Day after after -->
-          <div class="col-sm-2.4 hide" id="theDayAfterA">
-            <div class="card" style="width: 14rem;">
-              <div class="card-body">
-                <h5 class="card-title" id="dayAA">The Day After</h5>
-                <p class="card-text" id="dayAfterA"></p>
+    
+              <!-- Day after after -->
+              <div class="col-sm-2.4 hide" id="theDayAfterA">
+                <div class="card" style="width: 14rem;">
+                  <div class="card-body">
+                    <h5 class="card-title" id="dayAA">The Day After</h5>
+                    <p class="card-text" id="dayAfterA"></p>
+                  </div>
+                </div>
               </div>
-            </div>
-          </div>
-
-          <!-- Day after after after -->
-          <div class="col-sm-2.4 hide" id="theDayAfterAA">
-            <div class="card" style="width: 14rem;">
-              <div class="card-body">
-                <h5 class="card-title" id="dayAAA">The Day After</h5>
-                <p class="card-text" id="dayAfterAA"></p>
+    
+              <!-- Day after after after -->
+              <div class="col-sm-2.4 hide" id="theDayAfterAA">
+                <div class="card" style="width: 14rem;">
+                  <div class="card-body">
+                    <h5 class="card-title" id="dayAAA">The Day After</h5>
+                    <p class="card-text" id="dayAfterAA"></p>
+                  </div>
+                </div>
               </div>
             </div>
           </div>

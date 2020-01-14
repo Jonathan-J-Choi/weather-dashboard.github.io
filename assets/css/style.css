@@ -10,3 +10,12 @@ p{
 .hide{
   display: none;
 }
+.jumboFore{
+  margin-bottom: 8em
+}
+.foreCast{
+  margin-left: 1em;
+}
+.saved{
+  margin: .5em;
+}

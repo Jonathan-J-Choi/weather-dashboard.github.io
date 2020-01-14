@@ -1,7 +1,18 @@
+// ** how to take the values out of local storage?
+// ** how to turn those values and turn them into individual buttons?
+// ** make those buttons function individually to recall the weather?
 // Search Button and Main Area
+$(document).ready(function() {
+  clearButtons();
+});
 $(srchBtn).on("click", function() {
-  saveSearch();
-
+  var searchValue = $("#srch").val();
+  console.log(searchValue);
+  saveSearch(searchValue);
+  getWeather(searchValue);
+});
+// **Dan: Set this as it's on function. Added searchValue.
+function getWeather(searchValue) {
   // empty old info
   $(
     "#city, #mainDisp, #tod, #todDate, #tom, #tomDate, #dayAfter, #dayA, #dayAfterA, #dayAA, #dayAfterAA, #dayAAA"
@@ -9,7 +20,7 @@ $(srchBtn).on("click", function() {
   $.ajax({
     url:
       "http://api.openweathermap.org/data/2.5/weather?q=" +
-      srch.value +
+      searchValue +
       "&appid=7ba67ac190f85fdba2e2dc6b9d32e93c&units=imperial"
   }).then(function(data) {
     // Populating the main area
@@ -32,39 +43,36 @@ $(srchBtn).on("click", function() {
     $("#mainDisp").append(lowP);
     $("#mainDisp").append(humTod);
     $("#mainDisp").append(wind);
-
     // populate 5 day forecast cards
-    forecast();
-
+    forecast(searchValue);
     // Add UV index to mainDisplay
-    ultraViolent();
-
+    ultraViolent(lat, lon);
     // UV Index
-    function ultraViolent() {
-      $.ajax({
-        url:
-          "http://api.openweathermap.org/data/2.5/uvi?lat=" +
-          lat +
-          "&lon=" +
-          lon +
-          "&appid=7ba67ac190f85fdba2e2dc6b9d32e93c&units=imperial"
-      }).then(function(data) {
-        var uv = $("<p>").text("UV Index: " + data.value);
-        $("#mainDisp").append(uv);
-      });
-    }
   });
-});
-
+}
+// **Dan: Removed this function from inside the onclick event -- added variables to function call
+function ultraViolent(lat, lon) {
+  $.ajax({
+    url:
+      "http://api.openweathermap.org/data/2.5/uvi?lat=" +
+      lat +
+      "&lon=" +
+      lon +
+      "&appid=7ba67ac190f85fdba2e2dc6b9d32e93c&units=imperial"
+  }).then(function(data) {
+    var uv = $("<p>").text("UV Index: " + data.value);
+    $("#mainDisp").append(uv);
+  });
+}
 // Forecast cards
-function forecast() {
+function forecast(searchValue) {
   $.ajax({
     url:
       "http://api.openweathermap.org/data/2.5/forecast?q=" +
-      srch.value +
+      searchValue +
       "&appid=7ba67ac190f85fdba2e2dc6b9d32e93c&units=imperial"
   }).then(function(data) {
-
+    $("#headingFore").removeClass("hide");
     // day 1 card
     $("#today").removeClass("hide");
     var todDat = data.list[0].dt_txt;
@@ -80,7 +88,6 @@ function forecast() {
     $("#tod").append(todText);
     $("#tod").append(lowTod);
     $("#tod").append(humTod);
-
     // day 2 card
     $("#tomorrow").removeClass("hide");
     var tomDat = data.list[8].dt_txt;
@@ -96,7 +103,6 @@ function forecast() {
     $("#tom").append(tomText);
     $("#tom").append(lowTom);
     $("#tom").append(humTom);
-
     // day 3 card
     $("#theDayAfter").removeClass("hide");
     var dat = data.list[16].dt_txt;
@@ -114,7 +120,6 @@ function forecast() {
     $("#dayAfter").append(high);
     $("#dayAfter").append(low);
     $("#dayAfter").append(hum);
-
     // day 4 card
     $("#theDayAfterA").removeClass("hide");
     var dat = data.list[24].dt_txt;
@@ -132,7 +137,6 @@ function forecast() {
     $("#dayAfterA").append(high);
     $("#dayAfterA").append(low);
     $("#dayAfterA").append(hum);
-
     // day 5 card
     $("#theDayAfterAA").removeClass("hide");
     var dat = data.list[32].dt_txt;
@@ -152,82 +156,50 @@ function forecast() {
     $("#dayAfterAA").append(hum);
   });
 }
+var pastSearches = JSON.parse(localStorage.getItem("srchArray")) || [];
 // Saving searches to local storage
-function saveSearch() {
-  var pastSearches = JSON.parse(localStorage.getItem("srchArray"));
+function saveSearch(searchValue) {
   if (Array.isArray(pastSearches) === true) {
-    var srchArray = [srch.value];
-    console.log("this is past search", pastSearches);
-    var comboArray = srchArray.concat(pastSearches);
-    var srchStringArray = JSON.stringify(comboArray);
+    pastSearches.push(searchValue);
+    // console.log(pastSearches);
+    // var comboArray = srchArray.push(pastSearches);
+    // console.log(comboArray);
+    var srchStringArray = JSON.stringify(pastSearches);
     localStorage.setItem("srchArray", srchStringArray);
   } else {
-    var srchArray = [srch.value];
-    var srchStringArray = JSON.stringify(srchArray);
+    pastSearches.push(searchValue);
+    var srchStringArray = JSON.stringify(pastSearches);
     localStorage.setItem("srchArray", srchStringArray);
   }
-
-    for(var i = 0; i < srchArray.length; i++) {
-      var srchBtn = $("<button>");
-      $(srchBtn).addClass( "saved" );
-      srchBtn.text(srchArray[i]);
-      srchBtn.appendTo("#pstSrch");
-    }
+  clearButtons();
+}
+function clearButtons() {
+  var storedArrayItems = JSON.parse(localStorage.getItem("srchArray"));
+  var pastSearchDisplay = $("#pstSrch");
+  pastSearchDisplay.empty();
+  for (var i = 0; i < storedArrayItems.length; i++) {
+    // pastSearchDisplay.empty();
+    var srchBtn = $("<button>");
+    $(srchBtn).addClass("saved btn btn-info");
+    console.log(pastSearches);
+    srchBtn.text(pastSearches[i]);
+    pastSearchDisplay.append(srchBtn);
+    // srchBtn.appendTo("#pstSrch");
   }
+}
 
-
-  $("#pstSrch").on("click", ".saved", function() {
-    // empty old info
-    console.log("hello")
-    $(
-      "#city, #mainDisp, #tod, #todDate, #tom, #tomDate, #dayAfter, #dayA, #dayAfterA, #dayAA, #dayAfterAA, #dayAAA"
-    ).empty();
-    $.ajax({
-      url:
-        "http://api.openweathermap.org/data/2.5/weather?q=" +
-        $('.saved').text() +
-        "&appid=7ba67ac190f85fdba2e2dc6b9d32e93c&units=imperial"
-    }).then(function(data) {
-      // Populating the main area
-      var city = data.name;
-      var img = $("<img>").attr(
-        "src",
-        "http://openweathermap.org/img/w/" + data.weather[0].icon + ".png"
-      );
-      var mainTxt = "Current Temp is: " + data.main.temp + "°F";
-      var highP = $("<p>").text("Today's High is: " + data.main.temp_max + "°F");
-      var lowP = $("<p>").text("Today's Low is: " + data.main.temp_min + "°F");
-      var humTod = $("<p>").text("Humidity: " + data.main.humidity + "%");
-      var wind = $("<p>").text("Wind Speed: " + data.wind.speed + " MPH");
-      var lon = data.coord.lon;
-      var lat = data.coord.lat;
-      $("#city").text(city);
-      $("#mainDisp").text(mainTxt);
-      $("#city").append(img);
-      $("#mainDisp").append(highP);
-      $("#mainDisp").append(lowP);
-      $("#mainDisp").append(humTod);
-      $("#mainDisp").append(wind);
-  
-      // populate 5 day forecast cards
-      forecast();
-  
-      // Add UV index to mainDisplay
-      ultraViolent();
-  
-      // UV Index
-      function ultraViolent() {
-        $.ajax({
-          url:
-            "http://api.openweathermap.org/data/2.5/uvi?lat=" +
-            lat +
-            "&lon=" +
-            lon +
-            "&appid=7ba67ac190f85fdba2e2dc6b9d32e93c&units=imperial"
-        }).then(function(data) {
-          var uv = $("<p>").text("UV Index: " + data.value);
-          $("#mainDisp").append(uv);
-        });
-      }
-    });
+// Relevant weather to button press
+// ** thank you Dan I couldn't have done this without you!
+$("#pstSrch")
+  .first()
+  .on("click", ".saved", function() {
+    $(".saved").val("");
+    var searchValue = $(this).text();
+    getWeather(searchValue);
   });
+
+// Deleting saved storage
+$("#clear").on("click", function() {
+  localStorage.clear();
+  location.reload();
+});
