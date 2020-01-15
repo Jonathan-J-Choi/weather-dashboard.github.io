@@ -19,7 +19,7 @@ function getWeather(searchValue) {
   ).empty();
   $.ajax({
     url:
-      "http://api.openweathermap.org/data/2.5/weather?q=" +
+      "https://api.openweathermap.org/data/2.5/weather?q=" +
       searchValue +
       "&appid=7ba67ac190f85fdba2e2dc6b9d32e93c&units=imperial"
   }).then(function(data) {
@@ -27,7 +27,7 @@ function getWeather(searchValue) {
     var city = data.name;
     var img = $("<img>").attr(
       "src",
-      "http://openweathermap.org/img/w/" + data.weather[0].icon + ".png"
+      "https://openweathermap.org/img/w/" + data.weather[0].icon + ".png"
     );
     var mainTxt = "Current Temp is: " + data.main.temp + "°F";
     var highP = $("<p>").text("Today's High is: " + data.main.temp_max + "°F");
@@ -54,7 +54,7 @@ function getWeather(searchValue) {
 function ultraViolent(lat, lon) {
   $.ajax({
     url:
-      "http://api.openweathermap.org/data/2.5/uvi?lat=" +
+      "https://api.openweathermap.org/data/2.5/uvi?lat=" +
       lat +
       "&lon=" +
       lon +
@@ -68,7 +68,7 @@ function ultraViolent(lat, lon) {
 function forecast(searchValue) {
   $.ajax({
     url:
-      "http://api.openweathermap.org/data/2.5/forecast?q=" +
+      "https://api.openweathermap.org/data/2.5/forecast?q=" +
       searchValue +
       "&appid=7ba67ac190f85fdba2e2dc6b9d32e93c&units=imperial"
   }).then(function(data) {
